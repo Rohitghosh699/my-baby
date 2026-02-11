@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Love Dissu ❤️</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #ffb6c1;
+    overflow: hidden;
+    text-align: center;
+    color: white;
+  }
+
+  /* Heart background floating */
+  .heart {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: red;
+    transform: rotate(45deg);
+    animation: float 6s linear infinite;
+  }
+  .heart::before,
+  .heart::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: red;
+    border-radius: 50%;
+  }
+  .heart::before { top: -10px; left: 0; }
+  .heart::after { left: 10px; top: 0; }
+
+  @keyframes float {
+    0% { transform: translateY(100vh) rotate(45deg); opacity:1; }
+    100% { transform: translateY(-10vh) rotate(45deg); opacity:0; }
+  }
+
+  .page {
+    min-height: 100vh;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .page.active { display: flex; }
+
+  h1 {
+    font-size: 2.2em;
+    margin-bottom: 15px;
+    opacity: 0;
+    animation: fadeIn 2s forwards;
+  }
+
+  p {
+    font-size: 1.1em;
+    max-width: 700px;
+    line-height: 1.6;
+    opacity: 0;
+    animation: fadeIn 2s forwards 1s;
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  button {
+    margin-top: 25px;
+    padding: 12px 28px;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    background: #ff4d6d;
+    color: white;
+    cursor: pointer;
+    position: relative;
+  }
+
+  #finalMessage {
+    font-size: 2em;
+    margin-top: 20px;
+    opacity: 0;
+    animation: fadeIn 2s forwards;
+  }
+
+  /* Heart particles for Yes click */
+  .particle {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: red;
+    transform: rotate(45deg);
+    pointer-events: none;
+    animation: particleMove 1s ease-out forwards;
+  }
+  .particle::before,
+  .particle::after {
+    content: "";
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: red;
+    border-radius: 50%;
+  }
+  .particle::before { top: -7.5px; left: 0; }
+  .particle::after { left: 7.5px; top: 0; }
+
+  @keyframes particleMove {
+    to {
+      transform: translate(var(--x), var(--y)) rotate(45deg);
+      opacity: 0;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Heart container -->
+<div id="heartsContainer"></div>
+
+<!-- PAGE 1 -->
+<div class="page active" id="page1">
+  <h1>My Love Dissu ❤️</h1>
+  <button onclick="nextPage()">Start</button>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="page2">
+  <h1>From My Heart 💗</h1>
+  <p>
+    Ami jani ami khub baje boyfriend.<br><br>
+    Ami eta-o jani je ami toke konodin properly
+    special feel korate parini — seta amar bhul.<br><br>
+    Ami beshi express korte pari na,
+    kintu ami try korbo… next time toke
+    special feel koranor,
+    amar sob feelings bujhanor.
+  </p>
+  <button onclick="nextPage()">Next</button>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="page3">
+  <h1>Why You Mean Everything ❤️</h1>
+  <p>
+    Tui chara amar life e entertainment bole kichu thakto na.<br><br>
+    Tui je bhabe amar khayal rakhis,
+    seta hoito ami age bujhini — kintu ekhon bujhi.<br><br>
+    Tor frustration howa ta justified,
+    karon ami kokhono deeply bhabini
+    tor ki bhalo lagte pare.<br><br>
+    Ami perfect na…<br>
+    Ami boring hote pari…<br><br>
+    But ami toke mon theke bhalobashi.
+  </p>
+  <button onclick="nextPage()">Next</button>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page" id="page4">
+  <h1>One Question 💍</h1>
+  <p>Will you stay with me? ❤️</p>
+  <button id="yesBtn" onclick="yesClicked()">Yes</button>
+  <button id="noBtn" onclick="noClicked()">No</button>
+  <div id="finalMessage"></div>
+</div>
+
+<script>
+let currentPage = 1;
+
+// Page navigation
+function nextPage() {
+  document.getElementById("page" + currentPage).classList.remove("active");
+  currentPage++;
+  document.getElementById("page" + currentPage).classList.add("active");
+}
+
+// Floating hearts
+const heartsContainer = document.getElementById("heartsContainer");
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.style.left = Math.random() * window.innerWidth + "px";
+  heart.style.width = 15 + Math.random() * 15 + "px";
+  heart.style.height = heart.style.width;
+  heart.style.animationDuration = 4 + Math.random() * 3 + "s";
+  heartsContainer.appendChild(heart);
+  setTimeout(() => heartsContainer.removeChild(heart), 7000);
+}
+setInterval(createHeart, 400);
+
+// No button fun: shrink + random position
+let noSize = 16; // initial font size
+function noClicked() {
+  const noBtn = document.getElementById("noBtn");
+  noSize = Math.max(noSize - 2, 8);
+  noBtn.style.fontSize = noSize + "px";
+  noBtn.style.position = "absolute";
+  noBtn.style.top = Math.random() * (window.innerHeight - 60) + "px";
+  noBtn.style.left = Math.random() * (window.innerWidth - 100) + "px";
+}
+
+// Yes button: show message + heart particles
+function yesClicked() {
+  const finalMsg = document.getElementById("finalMessage");
+  finalMsg.textContent = "Yay! ❤️ I love you!";
+  // create heart particle explosion
+  for(let i=0; i<50; i++) {
+    setTimeout(createParticle, i*50);
+  }
+}
+
+// Heart particles function
+function createParticle() {
+  const particle = document.createElement("div");
+  particle.className = "particle";
+  const x = (Math.random()-0.5) * 300 + "px";
+  const y = (Math.random()-0.5) * 300 + "px";
+  particle.style.setProperty('--x', x);
+  particle.style.setProperty('--y', y);
+  particle.style.left = window.innerWidth/2 + "px";
+  particle.style.top = window.innerHeight/2 + "px";
+  document.body.appendChild(particle);
+  setTimeout(() => document.body.removeChild(particle), 1000);
+}
+</script>
+
+</body>
+</html>
